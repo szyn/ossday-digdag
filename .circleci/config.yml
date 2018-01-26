@@ -1,0 +1,33 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: szyn/docker-digdag:0.9.21
+    working_directory: ~/workspace
+    steps:
+      - checkout
+      - run: ./.circleci/ci_test.sh
+  lint:
+    docker:
+      - image: python:3.4-slim
+    working_directory: ~/workspace
+    environment:
+      REVIEWDOG_VERSION: 0.9.8
+      LBINDIR: /usr/local/bin
+    steps:
+      - checkout
+      - run: pip install yamllint
+      - run: apt-get update && apt-get install -y curl git
+      - run:
+          command: |
+            curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 \
+                 -o ${LBINDIR}/reviewdog && \
+            chmod +x ${LBINDIR}/reviewdog
+      - run: reviewdog -ci="circle-ci" -conf=.reviewdog.yml
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - test
+      - lint

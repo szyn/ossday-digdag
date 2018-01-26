@@ -1,0 +1,8 @@
+extends: default
+
+rules:
+  document-start: false
+  key-duplicates: enable
+  colons: {max-spaces-before: 1}
+  indentation: {spaces: 2, indent-sequences: true, check-multi-line-strings: false}
+  empty-lines: {max: 1}

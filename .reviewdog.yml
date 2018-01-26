@@ -1,0 +1,6 @@
+runner:
+  ymllint:
+    cmd: find . -type f -name "*.dig" -exec yamllint {} -f parsable \;
+    errorformat:
+      - "%E%f:%l:%c: [error] %m"
+      - "%E%f:%l:%c: [warning] %m"
