@@ -6,4 +6,4 @@ PROJECT_DIR=${SCRIPT_DIR}/../
 
 find . -maxdepth 1 -type d \
        -not -path '*/\.*' \
-       -exec digdag check --project {} \;
+       -exec bash -c "digdag check --project {}" \;
