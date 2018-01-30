@@ -1,12 +1,13 @@
 version: 2
 jobs:
-  test:
+  check:
     docker:
       - image: szyn/docker-digdag:0.9.21
     working_directory: ~/workspace
     steps:
       - checkout
-      - run: ./.circleci/ci_test.sh
+      - run: ./.circleci/ci_check.sh
+
   lint:
     docker:
       - image: python:3.4-slim
@@ -27,7 +28,7 @@ jobs:
 
 workflows:
   version: 2
-  test-and-deploy:
+  check-and-lint:
     jobs:
-      - test
+      - check
       - lint
